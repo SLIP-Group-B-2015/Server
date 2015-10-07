@@ -1,0 +1,2 @@
+To activate flask change to the directory containing venv and type: "source venv/bin/activate" (for linux users). 
+You can then execute any files by: "python <filename>" and it you should use localhost:<port number> for testing purposes.
