@@ -1,15 +1,18 @@
-from flask import Flask, render_template
-# Configurations
-USERNAME = "admin"
+from flask import Flask, request, render_template
+# Configurations 
+USERNAME = "admin" # (temporary check until database is working)
 PASSWORD = "password"
 
 # Create app object
 app = Flask(__name__)
 app.config.from_object(__name__)
 
-@app.route('/')
+@app.route('/', methods=['POST', 'GET'])
 def home(name=None):
-    return render_template('simpleLink.html', name=name)
+    if request.method == 'POST':
+        return "This is a test! It works! %s username" % request.form['username']
+    else:
+        return "It failed"
 
 @app.route('/test/')
 def test():
