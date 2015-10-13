@@ -1,5 +1,5 @@
 from flask import Flask, request, render_template
-# Configurations 
+# Configurations
 USERNAME = "admin" # (temporary check until database is working)
 PASSWORD = "password"
 
