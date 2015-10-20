@@ -2,6 +2,9 @@ from flask import Flask, request, render_template
 from flask.ext.sqlalchemy import SQLAlchemy
 from sqlalchemy.dialects.postgresql import UUID
 from datetime import datetime
+
+import utilities
+
 # Configurations
 USERNAME = "admin" # (temporary check until database is working)
 PASSWORD = "password"
@@ -25,6 +28,8 @@ def test():
     return 'The web site you are trying to reach is undergoing construction by a team of highly trained monkies. Please visit another time!'
 
 # Database Schema
+# Written by Arthur Verkaik
+
 # Users Table
 class Users(db.Model):
     userid = db.Column(UUID, primary_key=True)
@@ -32,19 +37,34 @@ class Users(db.Model):
     email = db.Column(db.String(50), nullable=False)
     firstname = db.Column(db.String(30), nullable=False)
     lastname = db.Column(db.String(30), nullable=False)
-    password = db.Column(db.String(50), nullable=False)
+    password = db.Column(db.String(100), nullable=False)
+
+    def __repr__(self):
+        return '<User %s>' % self.username
 
 # Raspberries Table
 class Raspberries(db.Model):
     raspberryid = db.Column(UUID, primary_key=True)
-    userid = db.Column(UUID, db.ForeignKey('user.userid'))
-    
+    userid = db.Column(UUID, db.ForeignKey('users.userid'))
+
+    def __repr__(self):
+        return '<Raspberry %r>' % self.raspberryid
 # Events Table
 class Events(db.Model):
     raspberryid = db.Column(UUID, db.ForeignKey('raspberries.raspberryid'), primary_key=True)
     eventid = db.Column(db.String(10), nullable=False, primary_key=True)
-    eventtime = db.Column(db.DateTime, default=datetime.utcnow(), primary_key=True)
+    eventtime = db.Column(db.DateTime, default=datetime.now(), primary_key=True)
     description = db.Column(db.Text)
+
+    def __repr__(self):
+        return '<Raspberry %r, EventID %r, EventTime %r>' % (self.raspberryid, self.eventid, self.eventtime)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0')
+
+# Example query, which gets the events which are linked to the user 'marshall'
+
+# query = db.session.query(Events).\
+# filter(Users.userid == Raspberries.userid).\
+# filter(Users.username == "marshall").\
+# filter(Raspberries.raspberryid == Events.raspberryid).all()
