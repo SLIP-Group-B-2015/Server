@@ -3,7 +3,7 @@ from flask.ext.sqlalchemy import SQLAlchemy
 from sqlalchemy.dialects.postgresql import UUID
 from datetime import datetime
 
-import utilities
+from utilities import *
 
 # Configurations
 USERNAME = "admin" # (temporary check until database is working)
@@ -49,6 +49,7 @@ class Raspberries(db.Model):
 
     def __repr__(self):
         return '<Raspberry %r>' % self.raspberryid
+        
 # Events Table
 class Events(db.Model):
     raspberryid = db.Column(UUID, db.ForeignKey('raspberries.raspberryid'), primary_key=True)
