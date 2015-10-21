@@ -2,6 +2,7 @@ from flask import Flask, request, render_template
 from flask.ext.sqlalchemy import SQLAlchemy
 from sqlalchemy.dialects.postgresql import UUID
 from datetime import datetime
+import uuid
 
 from utilities import *
 
@@ -33,8 +34,8 @@ def test():
 # Users Table
 class Users(db.Model):
     userid = db.Column(UUID, primary_key=True)
-    username = db.Column(db.String(12), nullable=False)
-    email = db.Column(db.String(50), nullable=False)
+    username = db.Column(db.String(12), unique=True, nullable=False)
+    email = db.Column(db.String(50), unique=True, nullable=False)
     firstname = db.Column(db.String(30), nullable=False)
     lastname = db.Column(db.String(30), nullable=False)
     password = db.Column(db.String(100), nullable=False)
@@ -49,7 +50,7 @@ class Raspberries(db.Model):
 
     def __repr__(self):
         return '<Raspberry %r>' % self.raspberryid
-        
+
 # Events Table
 class Events(db.Model):
     raspberryid = db.Column(UUID, db.ForeignKey('raspberries.raspberryid'), primary_key=True)
