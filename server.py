@@ -54,9 +54,10 @@ class Raspberries(db.Model):
 # Events Table
 class Events(db.Model):
     raspberryid = db.Column(UUID, db.ForeignKey('raspberries.raspberryid'), primary_key=True)
-    eventid = db.Column(db.String(10), nullable=False, primary_key=True)
+    eventtype = db.Column(db.String(10), nullable=False, primary_key=True)
     eventtime = db.Column(db.DateTime, default=datetime.now(), primary_key=True)
-    description = db.Column(db.Text)
+    note = db.Column(db.Text)
+    name = db.Column(db.String(50))
 
     def __repr__(self):
         return '<Raspberry %r, EventID %r, EventTime %r>' % (self.raspberryid, self.eventid, self.eventtime)
