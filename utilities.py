@@ -40,17 +40,20 @@ def addEvent(raspberryID, eventType, eventTime, note, name):
 
 def unpackJSON(inputJSON):
     # event types - ID_SCAN, KNOCK, MAIL, OPEN, CLOSE
+    data = json.loads(inputJSON)
     eventType = str(json.loads(inputJSON)[u'event'])
     eventTime = str(json.loads(inputJSON)[u'time'])
     raspberryID = str(json.loads(inputJSON)[u'raspberry'])
-    note = str(json.loads(inputJSON)[u'note'])
+    note = None
+    if data.get('note'):
+        note = str(json.loads(inputJSON)[u'note'])
     name = None
 
     if eventType == 'ID_SCAN':
         userID = str(json.loads(inputJSON)[u'user'])
         bothNames = Users.query.filter_by(userid=userID).with_entities(Users.firstname,Users.lastname).all()
         firstName = bothNames[0][0]
-        lastName = borthNames[0][1]
-        name = firstName + lastName
+        lastName = bothNames[0][1]
+        name = firstName + ' ' + lastName
 
     addEvent(raspberryID, eventType, eventTime, note, name)
