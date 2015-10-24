@@ -33,28 +33,24 @@ def addRaspberry(raspberryID):
         return False
 
 # Return void
-def addEvent(raspberryID, eventID, eventTime, description):
-    newEvent = Events(raspberryid=raspberryID, eventid=eventID, eventtime=eventTime, description=description)
+def addEvent(raspberryID, eventType, eventTime, note, name):
+    newEvent = Events(raspberryid=raspberryID, eventtype=eventType, eventtime=eventTime, note=note, name=name)
     _commitChange(newEvent)
 
 
-def unpackJSON(json):
+def unpackJSON(inputJSON):
     # event types - ID_SCAN, KNOCK, MAIL, OPEN, CLOSE
-    eventType = str(json.loads(json)[u'event'])
-    eventTime = str(json.loads(json))[u'time']
-    raspberryID = str(json.loads(json))[u'raspberry']
+    eventType = str(json.loads(inputJSON)[u'event'])
+    eventTime = str(json.loads(inputJSON)[u'time'])
+    raspberryID = str(json.loads(inputJSON)[u'raspberry'])
+    note = str(json.loads(inputJSON)[u'note'])
+    name = None
 
     if eventType == 'ID_SCAN':
-        userID = str(json.loads(json))[u'user']
-        username = str(Users.query.filter_by(userid=userID).with_entities(Users.username).all())[4:-4]
-        description = "%s was at your door!" % (username)
-    elif eventType == 'KNOCK':
-        description = "Someone knocked at your door!"
-    elif eventType == 'MAIL':
-        description = "You received mail!"
-    elif eventType == 'OPEN':
-        description = "Your door was opened!"
-    elif eventType == 'CLOSE':
-        description = "Your door was closed!"
+        userID = str(json.loads(inputJSON)[u'user'])
+        bothNames = Users.query.filter_by(userid=userID).with_entities(Users.firstname,Users.lastname).all()
+        firstName = bothNames[0][0]
+        lastName = borthNames[0][1]
+        name = firstName + lastName
 
-    addEvent(raspberryID, eventType, eventTime, description)
+    addEvent(raspberryID, eventType, eventTime, note, name)
