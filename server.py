@@ -58,9 +58,10 @@ class Events(db.Model):
     eventtime = db.Column(db.DateTime, default=datetime.now(), primary_key=True)
     note = db.Column(db.Text)
     name = db.Column(db.String(50))
+    sent = db.Column(db.Boolean, default=False)
 
     def __repr__(self):
-        return '<Raspberry %r, EventID %r, EventTime %r>' % (self.raspberryid, self.eventid, self.eventtime)
+        return '<Raspberry %r, EventType %r, EventTime %r, Sent %r>' % (self.raspberryid, self.eventtype, self.eventtime, self.sent)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0')
