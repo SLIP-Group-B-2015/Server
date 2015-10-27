@@ -20,9 +20,9 @@ db = SQLAlchemy(app)
 @app.route('/', methods=['POST', 'GET'])
 def home(name=None):
     if request.method == 'POST':
-        json = request.json
-        print(json)
-        print(json.dumps(json))
+        jsonMsg = request.json
+        #print(jsonMsg)
+        print(json.dumps(jsonMsg))
         if (json is not None):
             print("\nUnpacking JSON")
             unpackJSON(json.dumps(json))
