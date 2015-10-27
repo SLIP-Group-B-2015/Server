@@ -24,7 +24,7 @@ def home(name=None):
         print(json)
         if (json is not None):
             print("\nUnpacking JSON")
-            unpackJSON(json)
+            unpackJSON(json.dumps(json))
             print("JSON unpacked!")
         return "This is a test! It works!"
     else:
@@ -35,7 +35,7 @@ def test():
     json = request.json
     print(json)
     if json is not None:
-        unpackJSON(json)
+        unpackJSON(json.dumps(json))
         print("\nJSON unpacked")
     return 'The web site you are trying to reach is undergoing construction by a team of highly trained monkies. Thank you for visiting'
 
