@@ -15,7 +15,7 @@ app = Flask(__name__)
 app.debug = True
 app.config.from_object(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres:///slipDB'
-app.confJSON unpackedig['SQLALCHEMY_NATIVE_UNICODE'] = True
+app.config['SQLALCHEMY_NATIVE_UNICODE'] = True
 db = SQLAlchemy(app)
 
 @app.route('/', methods=['POST', 'GET'])
