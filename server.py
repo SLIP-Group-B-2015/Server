@@ -21,10 +21,11 @@ db = SQLAlchemy(app)
 def home(name=None):
     if request.method == 'POST':
         json = request.json
+        print(json)
         if (json is not None):
-            print("Unpacking JSON")
+            print("\nUnpacking JSON")
             unpackJSON(json)
-            print("Printing JSON:\n{0}".format(json))
+            print("JSON unpacked!")
         return "This is a test! It works!"
     else:
         return test()
@@ -32,9 +33,10 @@ def home(name=None):
 @app.route('/test/')
 def test():
     json = request.json
+    print(json)
     if json is not None:
         unpackJSON(json)
-        print("Printing JSON:\n{0}".format(json))
+        print("\nJSON unpacked")
     return 'The web site you are trying to reach is undergoing construction by a team of highly trained monkies. Thank you for visiting'
 
 # Database Schema
