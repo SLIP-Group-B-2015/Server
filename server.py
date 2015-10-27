@@ -20,12 +20,20 @@ db = SQLAlchemy(app)
 @app.route('/', methods=['POST', 'GET'])
 def home(name=None):
     if request.method == 'POST':
+        json = request.json
+        if (json is not None):
+            unpackJSON(json)
+            print(json)
         return "This is a test! It works! %s username" % request.form['username']
     else:
         return test()
 
 @app.route('/test/')
 def test():
+    json = request.json
+    if json is not None:
+        unpackJSON(json)
+        print(json)
     return 'The web site you are trying to reach is undergoing construction by a team of highly trained monkies. Thank you for visiting'
 
 # Database Schema
@@ -64,7 +72,7 @@ class Events(db.Model):
         return '<Raspberry %r, EventType %r, EventTime %r, Sent %r>' % (self.raspberryid, self.eventtype, self.eventtime, self.sent)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0')
+    app.run(host='0.0.0.0', port = 5000)
 
 # Example query, which gets the events which are linked to the user 'marshall'
 
