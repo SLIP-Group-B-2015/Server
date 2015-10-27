@@ -56,10 +56,11 @@ def unpackJSON(inputJSON):
         lastName = bothNames[0][1]
         name = firstName + ' ' + lastName
 
+    return addEvent(raspberryID, eventType, eventTime, note, name)
 
-    addEvent(raspberryID, eventType, eventTime, note, name)
-
-def generateJSON(userID):
+ ##  {"event":"ID_SCAN","time":"Sat Oct 24 19:13:00 BST 2015","raspberry":"b673ab6f-182e-4c95-9715-ba8587fa33ca","user":"b673ab6f-182e-4c95-9715-ba8587fa33ca"}
+def generateJSON(inputJSON):
+    userID = str(json.loads(inputJSON)[u'userid'])
     unsentEvents = db.session.query(Events).filter(Users.userid==userID).filter(Users.userid==Raspberries.userid).filter(Raspberries.raspberryid==Events.raspberryid).filter(Events.sent==False).all()
     eventList = []
     for i in unsentEvents:
@@ -67,6 +68,5 @@ def generateJSON(userID):
         eventList.append(event)
         i.sent = True
         db.session.commit()
-
 
     return json.dumps({'newEvents': eventList})
