@@ -3,7 +3,7 @@ Contains files to run the server.
 
 We use python's Flask for the web pages (http://flask.pocoo.org/) and run the server off a university machine.
 
-To get to the server use:
+To get to the server use a terminal and these commands:
 ssh jamiemcc@comp-soc.com (if you have forgotten the password just ask) and then:
 ssh elara.comp-soc.com (needs password again) and you will be on the server. Most code is in  /home/jamiemcc/SLIPServer/Server.
 
