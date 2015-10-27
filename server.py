@@ -12,6 +12,7 @@ PASSWORD = "password"
 
 # Create app object
 app = Flask(__name__)
+app.debug = True
 app.config.from_object(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres:///slipDB'
 app.config['SQLALCHEMY_NATIVE_UNICODE'] = True
