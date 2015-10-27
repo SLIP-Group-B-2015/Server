@@ -12,7 +12,6 @@ PASSWORD = "password"
 
 # Create app object
 app = Flask(__name__)
-app.debug = True
 app.config.from_object(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres:///slipDB'
 app.config['SQLALCHEMY_NATIVE_UNICODE'] = True
@@ -24,9 +23,9 @@ def home(name=None):
         jsonMsg = request.json
         #print(jsonMsg)
         print(json.dumps(jsonMsg))
-        if (json is not None):
+        if (jsonMsg is not None):
             print("\nUnpacking JSON")
-            unpackJSON(json.dumps(json))
+            unpackJSON(json.dumps(jsonMsg))
             print("JSON unpacked!")
         return "This is a test! It works!"
     else:
@@ -34,10 +33,10 @@ def home(name=None):
 
 @app.route('/test/')
 def test():
-    json = request.json
-    print(json)
-    if json is not None:
-        unpackJSON(json.dumps(json))
+    jsonMsg = request.json
+    print(jsonMsg)
+    if jsonMsg is not None:
+        unpackJSON(json.dumps(jsonMsg))
         print("\nJSON unpacked")
     return 'The web site you are trying to reach is undergoing construction by a team of highly trained monkies. Thank you for visiting'
 
