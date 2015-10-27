@@ -22,11 +22,11 @@ def home(name=None):
     if request.method == 'POST':
         return "This is a test! It works! %s username" % request.form['username']
     else:
-        return "It failed"
+        return test()
 
 @app.route('/test/')
 def test():
-    return 'The web site you are trying to reach is undergoing construction by a team of highly trained monkies. Please visit another time!'
+    return 'The web site you are trying to reach is undergoing construction by a team of highly trained monkies. Thank you for visiting'
 
 # Database Schema
 # Written by Arthur Verkaik
