@@ -37,7 +37,7 @@ def getRequest(jsonMsg):
         print("Unpacking JSON")
         unpackJSON(json.dumps(jsonMsg))
         print("JSON unpacked\n")
-        return generateJSON(jsonJSON) # Get requests should return JSON object with relevant info
+        return generateJSON(jsonMsg) # Get requests should return JSON object with relevant info
     return "No JSON was detected."
      
 
