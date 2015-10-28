@@ -28,6 +28,7 @@ def home(name=None):
         return "This is a test! It works!"
     else:
         # App requests updates from server
+        print("\n" + json.dumps(jsonMsg))
         return getRequest(jsonMsg)
 
 @app.route('/getRequest/')
