@@ -56,9 +56,10 @@ def unpackJSON(inputJSON):
         lastName = bothNames[0][1]
         name = firstName + ' ' + lastName
 
-    if (db.session.query(Events).filter(Events.raspberryid==raspberryID).filter(Events.eventtype==eventType).filter(Events.eventtime==eventTime).all() > 0):
-        addEvent(raspberryID, eventType, eventTime, note, name)
-
+    if (len(db.session.query(Events).filter(Events.raspberryid==raspberryID).filter(Events.eventtype==eventType).filter(Events.eventtime==eventTime).all()) >  0):
+        return "Event already exists!"
+    
+    addEvent(raspberryID, eventType, eventTime, note, name)
     return "Event successfully added!"
  ##  {"event":"ID_SCAN","time":"Sat Oct 24 19:13:00 BST 2015","raspberry":"b673ab6f-182e-4c95-9715-ba8587fa33ca","user":"b673ab6f-182e-4c95-9715-ba8587fa33ca"}
 def generateJSON(inputJSON):
