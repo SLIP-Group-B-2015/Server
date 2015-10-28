@@ -34,9 +34,6 @@ def home(name=None):
 def getRequest(jsonMsg):
     if jsonMsg is not None:
         print("\n" + json.dumps(jsonMsg))
-        print("Unpacking JSON")
-        unpackJSON(json.dumps(jsonMsg))
-        print("JSON unpacked\n")
         return generateJSON(jsonMsg) # Get requests should return JSON object with relevant info
     return "No JSON was detected."
      
