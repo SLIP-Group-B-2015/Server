@@ -29,7 +29,7 @@ def home(name=None):
     else:
         # App requests updates from server
         print("\n" + json.dumps(jsonMsg))
-        return getRequest(jsonMsg)
+        return getRequest(json.dumps(jsonMsg))
 
 @app.route('/getRequest/')
 def getRequest(jsonMsg):
