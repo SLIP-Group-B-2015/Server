@@ -72,3 +72,14 @@ def generateJSON(inputJSON):
         db.session.commit()
 
     return json.dumps({'newEvents': eventList})
+
+def updateUser(inputJSON):
+    query = db.session.query(Events).filter(Users.userid == Raspberries.userid).filter(Users.userid == getUserId(inputJSON))
+    return query
+    
+
+def getRaspberryId(inputJSON):
+    return str(json.loads(inputJSON)[u'raspberry'])
+
+def getUserId(inputJSON):
+    return str(json.loads(inputJSON)[u'userid'])

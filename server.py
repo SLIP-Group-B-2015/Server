@@ -6,12 +6,9 @@ import uuid
 
 from utilities import *
 
-# Configurations
-USERNAME = "admin" # (temporary check until database is working)
-PASSWORD = "password"
-
 # Create app object
 app = Flask(__name__)
+# DEBUG MUST BE TURNED OFF WHEN SERVER READY FOR DISTRIBUTION
 app.debug = True
 app.config.from_object(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres:///slipDB'
@@ -20,26 +17,29 @@ db = SQLAlchemy(app)
 
 @app.route('/', methods=['POST', 'GET'])
 def home(name=None):
+    jsonMsg = request.json
     if request.method == 'POST':
-        jsonMsg = request.json
-        #print(jsonMsg)
+        # Server is receiving JSON
         print(json.dumps(jsonMsg))
         if (jsonMsg is not None):
             print("\nUnpacking JSON")
             unpackJSON(json.dumps(jsonMsg))
-            print("JSON unpacked!")
+            print("\nJSON unpacked!")
         return "This is a test! It works!"
     else:
-        return test()
+        # App requests updates from server
+        return getRequest(jsonMsg)
 
-@app.route('/test/')
-def test():
-    jsonMsg = request.json
-    print(jsonMsg)
+@app.route('/getRequest/')
+def getRequest(jsonMsg):
     if jsonMsg is not None:
+        print(json.dumps(jsonMsg))
+        print("\nUnpacking JSON")
         unpackJSON(json.dumps(jsonMsg))
         print("\nJSON unpacked")
-    return 'The web site you are trying to reach is undergoing construction by a team of highly trained monkies. Thank you for visiting'
+        return updateUser(inputJSON) # Get requests should return JSON object with relevant info
+    return "No JSON was detected."
+     
 
 # Database Schema
 # Written by Arthur Verkaik
