@@ -20,11 +20,11 @@ def home(name=None):
     jsonMsg = request.json
     if request.method == 'POST':
         # Server is receiving JSON
-        print(json.dumps(jsonMsg))
+        print("\n" + json.dumps(jsonMsg))
         if (jsonMsg is not None):
-            print("\nUnpacking JSON")
+            print("Unpacking JSON")
             unpackJSON(json.dumps(jsonMsg))
-            print("\nJSON unpacked!")
+            print("JSON unpacked!\n")
         return "This is a test! It works!"
     else:
         # App requests updates from server
@@ -33,11 +33,11 @@ def home(name=None):
 @app.route('/getRequest/')
 def getRequest(jsonMsg):
     if jsonMsg is not None:
-        print(json.dumps(jsonMsg))
-        print("\nUnpacking JSON")
+        print("\n" + json.dumps(jsonMsg))
+        print("Unpacking JSON")
         unpackJSON(json.dumps(jsonMsg))
-        print("\nJSON unpacked")
-        return updateUser(inputJSON) # Get requests should return JSON object with relevant info
+        print("JSON unpacked\n")
+        return generateJSON(inputJSON) # Get requests should return JSON object with relevant info
     return "No JSON was detected."
      
 
