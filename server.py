@@ -23,23 +23,20 @@ def home(name=None):
         print("\n" + json.dumps(jsonMsg))
         if (jsonMsg is not None):
             print("Unpacking JSON")
-            return postJSON(json.dumps(jsonMsg))
-            #print("JSON unpacked!\n")
-            #return "This is a test! It works!"
-        return "No JSON was detected."
+            unpackJSON(json.dumps(jsonMsg))
+            print("JSON unpacked!\n")
+        return "This is a test! It works!"
     else:
         # App requests updates from server
-        if jsonMsg is not None:
-            print("\n" + json.dumps(jsonMsg))
-            return getJSON(json.dumps(jsonMsg)) # Get requests should return JSON object with relevant info
-        return "No JSON was detected."
+        print("\n" + json.dumps(jsonMsg))
+        return getRequest(jsonMsg)
 
-# @app.route('/getRequest/')
-# def getRequest(jsonMsg):
-#     if jsonMsg is not None:
-#         print("\n" + json.dumps(jsonMsg))
-#         return getJSON(json.dumps(jsonMsg)) # Get requests should return JSON object with relevant info
-#     return "No JSON was detected."
+@app.route('/getRequest/')
+def getRequest(jsonMsg):
+    if jsonMsg is not None:
+        print("jsonMsg: " + str(jsonMsg) + "\njsonMsgDump: " + json.dumps(jsonMsg))
+        return generateJSON(json.dumps(jsonMsg)) # Get requests should return JSON object with relevant info
+    return "No JSON was detected."
 
 
 # Database Schema
