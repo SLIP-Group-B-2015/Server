@@ -22,7 +22,6 @@ def home(name=None):
     if request.method == 'POST':
         # Server is receiving JSON
         print("\n" + json.dumps(jsonMsg))
-        print(postJSON(json.dumps(jsonMsg)))
         if (jsonMsg is not None):
             print("Unpacking JSON")
             return postJSON(json.dumps(jsonMsg))
@@ -32,7 +31,6 @@ def home(name=None):
     else:
         # App requests updates from server
         print("\n" + json.dumps(jsonMsg))
-        print(getJSON(json.dumps(jsonMsg)))
         if jsonMsg is not None:
             return getJSON(json.dumps(jsonMsg)) # Get requests should return JSON object with relevant info
         return "No JSON was detected."
