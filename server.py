@@ -23,21 +23,21 @@ def home(name=None):
         print("\n" + json.dumps(jsonMsg))
         if (jsonMsg is not None):
             print("Unpacking JSON")
-            unpackJSON(json.dumps(jsonMsg))
-            print("JSON unpacked!\n")
-        return "This is a test! It works!"
+            return postJSON(json.dumps(jsonMsg))
+            #print("JSON unpacked!\n")
+            #return "This is a test! It works!"
     else:
         # App requests updates from server
         print("\n" + json.dumps(jsonMsg))
-        return getRequest(json.dumps(jsonMsg))
+        return getRequest(jsonMsg)
 
 @app.route('/getRequest/')
 def getRequest(jsonMsg):
     if jsonMsg is not None:
         print("\n" + json.dumps(jsonMsg))
-        return generateJSON(jsonMsg) # Get requests should return JSON object with relevant info
+        return getJSON(json.dumps(jsonMsg)) # Get requests should return JSON object with relevant info
     return "No JSON was detected."
-     
+
 
 # Database Schema
 # Written by Arthur Verkaik
