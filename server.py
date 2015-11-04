@@ -17,6 +17,7 @@ db = SQLAlchemy(app)
 
 @app.route('/', methods=['POST', 'GET'])
 def home(name=None):
+    print request
     jsonMsg = request.json
     if request.method == 'POST':
         # Server is receiving JSON
@@ -29,8 +30,9 @@ def home(name=None):
         return "No JSON was detected."
     else:
         # App requests updates from server
+        print("\n" + json.dumps(jsonMsg))
+        print(getJSON(json.dumps(jsonMsg)))
         if jsonMsg is not None:
-            print("\n" + json.dumps(jsonMsg))
             return getJSON(json.dumps(jsonMsg)) # Get requests should return JSON object with relevant info
         return "No JSON was detected."
 
