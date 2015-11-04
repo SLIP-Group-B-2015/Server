@@ -83,7 +83,7 @@ def piPosts(data, eventType):
         bothNames = Users.query.filter_by(userid=userID).with_entities(Users.firstname,Users.lastname).all()
         fullName = bothNames[0][0] + ' ' + bothNames[0][1]
 
-    return addEvent(raspberryID, eventType, eventTime, note, fullName)
+    return str(addEvent(raspberryID, eventType, eventTime, note, fullName))
 
 # Deals with phone POST requests. Returns the UUID if successful. Returns False if not.
 def phonePosts(data, eventType):
@@ -96,12 +96,12 @@ def phonePosts(data, eventType):
         email = str(data[u'email'])
         firstName = str(data[u'firstName'])
         lastName = str(data[u'lastName'])
-        return addUser(username, email, firstName, lastName, password)
+        return str(addUser(username, email, firstName, lastName, password))
 
     elif eventType == 'ADDPI':
         raspberryID = str(data[u'raspberryid'])
         userID = str(data[u'userid'])
-        return connectUserToRaspberry(raspberryID, userID)
+        return str(connectUserToRaspberry(raspberryID, userID))
 
 def postJSON(inputJSON):
     # phone event types - REGISTER, ADDPI

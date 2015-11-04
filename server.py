@@ -22,6 +22,7 @@ def home(name=None):
     if request.method == 'POST':
         # Server is receiving JSON
         print("\n" + json.dumps(jsonMsg))
+        print(postJSON(json.dumps(jsonMsg)))
         if (jsonMsg is not None):
             print("Unpacking JSON")
             return postJSON(json.dumps(jsonMsg))
