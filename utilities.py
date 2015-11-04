@@ -79,7 +79,7 @@ def piPosts(data, eventType):
     fullName = None
 
     if eventType == 'ID_SCAN':
-        userID = str(json.loads(inputJSON)[u'user'])
+        userID = str(data[u'user'])
         bothNames = Users.query.filter_by(userid=userID).with_entities(Users.firstname,Users.lastname).all()
         fullName = bothNames[0][0] + ' ' + bothNames[0][1]
 
