@@ -160,8 +160,8 @@ def getPies(userID):
     return connectedRaspberries
 
 def checkLogin(userID, password):
-    hashedPassword =  Users.query.filter_by(userid=userID).with_entities(Users.password).all()
-    return pbkdf2_sha256.verify(password, hashedPassword)
+    hashedPassword =  Users.query.filter_by(userid=userID).with_entities(Users.password).first()
+    return pbkdf2_sha256.verify(password, hashedPassword.password)
 
 def getJSON(inputJSON):
     # Phone events (other than the list below): LOGIN, GETPI
