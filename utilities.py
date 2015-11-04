@@ -21,8 +21,7 @@ def _commitChange(newRow):
     db.session.commit()
 
 def checkUser(username, email):
-    if (len(db.session.query(Users).filter(Users.email=email).all()) == 0 and \
-        len(db.session.query(Users).filter(Users.username==username).all()) == 0):
+    if len(Users.query.filter_by(email=email).all()) == 0 and len(Users.query.filter_by(username=username).all()) == 0:
         return True
     else:
         return False
