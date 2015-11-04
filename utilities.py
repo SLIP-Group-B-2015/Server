@@ -142,8 +142,7 @@ def getEvents(eventType, userID, option):
 
     return events
 
-def phoneGets(eventType, userID, option):
-    events = getEvents(eventType, userID, option)
+def phoneGets(events):
     jsonEventList = []
 
     for i in events:
@@ -174,7 +173,8 @@ def getJSON(inputJSON):
     if eventType in phoneGetEvents:
         userID = str(data[u'userid'])
         option = str(data[u'option'])
-        jsonEventList = phoneGets(eventType, userID, option)
+        events = getEvents(eventType, userID, option)
+        jsonEventList = phoneGets(events)
         return json.dumps({'eventList': jsonEventList})
 
     elif eventType == 'LOGIN':
