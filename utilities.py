@@ -19,9 +19,16 @@ import uuid
 from passlib.hash import pbkdf2_sha256
 from server import db, Users, Raspberries, Events
 
-def _commitChange(newRow):
-    db.session.add(newRow)
-    db.session.commit()
+def _commitChange(newRow, errorDetected):
+    try:
+        db.session.add(newRow)
+        db.session.commit()
+    except:
+        db.session.rollback()
+        errorDetected = True
+        raise
+
+    return errorDetected
 
 def checkUser(username, email):
     if len(Users.query.filter_by(email=email).all()) == 0 and len(Users.query.filter_by(username=username).all()) == 0:
@@ -35,7 +42,7 @@ def addUser(username, email, firstName, lastName, password):
         newUser = Users(userid=str(uuid.uuid4()), username=username, email=email, \
                         firstname=firstName, lastname=lastName, \
                         password=pbkdf2_sha256.encrypt(password, rounds=2000, salt_size=16))
-        _commitChange(newUser)
+        _commitChange(newUser, False)
         newUserID = Users.query.filter_by(username=username).with_entities(Users.userid).first()
         return newUserID.userid
     else:
@@ -46,7 +53,7 @@ def addRaspberry(raspberryID):
     existingRaspberries = Raspberries.query.filter_by(raspberryid=raspberryID).all()
     if (len(existingRaspberries) == 0):
         newRaspberry = Raspberries(raspberryid=raspberryID, userid=None)
-        _commitChange(newRaspberry)
+        _commitChange(newRaspberry, False)
         return True
     else:
         return False
@@ -55,9 +62,13 @@ def addRaspberry(raspberryID):
 def connectUserToRaspberry(userID, raspberryID):
     raspberryRow = Raspberries.query.filter_by(raspberryid=raspberryID).first()
     if raspberryRow.userid == None:
-        raspberryRow.userid = userID
-        db.session.commit()
-        return True
+        try:
+            raspberryRow.userid = userID
+            db.session.commit()
+            return True
+        except:
+            db.session.rollback()
+            raise
     else:
         return False
 
@@ -67,9 +78,9 @@ def addEvent(raspberryID, eventType, eventTime, note, name):
             filter(Events.eventtype==eventType).filter(Events.eventtime==eventTime).\
             all()) > 0):
         return True
+
     newEvent = Events(raspberryid=raspberryID, eventtype=eventType, eventtime=eventTime, note=note, name=name)
-    _commitChange(newEvent)
-    return True
+    return _commitChange(newEvent, False)
 
 # Deals with pi POST requests. Returns a boolean (True = successfully added)
 def piPosts(data, eventType):
@@ -124,7 +135,7 @@ def postJSON(inputJSON):
  ##  {"event":"ID_SCAN","time":"Sat Oct 24 19:13:00 BST 2015","raspberry":"b673ab6f-182e-4c95-9715-ba8587fa33ca","user":"b673ab6f-182e-4c95-9715-ba8587fa33ca"}
 
 def getEvents(eventType, userID, option):
-
+    events = []
     eventsBaseQuery = db.session.query(Events).filter(Users.userid==userID).\
                  filter(Users.userid==Raspberries.userid).\
                  filter(Raspberries.raspberryid==Events.raspberryid)
@@ -152,8 +163,11 @@ def phoneGets(events):
     for i in events:
         jsonEvent = {"raspberryID":i.raspberryid, "eventType":i.eventtype, "eventTime":str(i.eventtime), "note": i.note, "name": i.name}
         jsonEventList.append(jsonEvent)
-        i.sent = True
-        db.session.commit()
+        try:
+            i.sent = True
+            db.session.commit()
+        except:
+            db.session.rollback()
 
     return jsonEventList
 
