@@ -5,9 +5,12 @@ Utility functions for the server
 # TODO
   - Documentation for each function
   - db.rollbacks() where necessary
+  - properly throw/catch errors
   - create testing functions (generateUsers, for example).
   - abstract away large queries.
   - add "INVALID EVENT TYPE" errors everywhere.
+  - postJSON should only return False if the data is not in the database when
+    returning False.
 '''
 
 
@@ -63,7 +66,7 @@ def addEvent(raspberryID, eventType, eventTime, note, name):
     if (len(db.session.query(Events).filter(Events.raspberryid==raspberryID).\
             filter(Events.eventtype==eventType).filter(Events.eventtime==eventTime).\
             all()) > 0):
-        return False
+        return True
     newEvent = Events(raspberryid=raspberryID, eventtype=eventType, eventtime=eventTime, note=note, name=name)
     _commitChange(newEvent)
     return True
@@ -96,18 +99,20 @@ def phonePosts(data, eventType):
         email = str(data[u'email'])
         firstName = str(data[u'firstName'])
         lastName = str(data[u'lastName'])
-        return str(addUser(username, email, firstName, lastName, password))
+        userID = str(addUser(username, email, firstName, lastName, password))
+        return json.dumps({'userid': userID})
 
     elif eventType == 'ADDPI':
         raspberryID = str(data[u'raspberryid'])
         userID = str(data[u'userid'])
-        return str(connectUserToRaspberry(raspberryID, userID))
+        added = str(connectUserToRaspberry(raspberryID, userID))
+        return json.dumps({'added': added})
 
 def postJSON(inputJSON):
     # phone event types - REGISTER, ADDPI
     # pi event types - ID_SCAN, KNOCK, MAIL, OPEN, CLOSE
     piEvents = ['ID_SCAN', 'KNOCK', 'MAIL', 'OPEN', 'CLOSE']
-    phonePostEvents = ['REGISTER']
+    phonePostEvents = ['REGISTER', 'ADDPI']
     data = json.loads(inputJSON)
     eventType = str(data[u'event'])
 
