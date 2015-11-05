@@ -11,6 +11,7 @@ Utility functions for the server
   - add "INVALID EVENT TYPE" errors everywhere.
   - postJSON should only return False if the data is not in the database when
     returning False.
+  - debug getEvents
 '''
 
 
@@ -19,16 +20,16 @@ import uuid
 from passlib.hash import pbkdf2_sha256
 from server import db, Users, Raspberries, Events
 
-def _commitChange(newRow, errorDetected):
+def _commitChange(newRow, noError):
     try:
         db.session.add(newRow)
         db.session.commit()
     except:
         db.session.rollback()
-        errorDetected = True
+        noError = False
         raise
 
-    return errorDetected
+    return noError
 
 def checkUser(username, email):
     if len(Users.query.filter_by(email=email).all()) == 0 and len(Users.query.filter_by(username=username).all()) == 0:
@@ -42,7 +43,7 @@ def addUser(username, email, firstName, lastName, password):
         newUser = Users(userid=str(uuid.uuid4()), username=username, email=email, \
                         firstname=firstName, lastname=lastName, \
                         password=pbkdf2_sha256.encrypt(password, rounds=2000, salt_size=16))
-        _commitChange(newUser, False)
+        _commitChange(newUser, True)
         newUserID = Users.query.filter_by(username=username).with_entities(Users.userid).first()
         return newUserID.userid
     else:
@@ -53,7 +54,7 @@ def addRaspberry(raspberryID):
     existingRaspberries = Raspberries.query.filter_by(raspberryid=raspberryID).all()
     if (len(existingRaspberries) == 0):
         newRaspberry = Raspberries(raspberryid=raspberryID, userid=None)
-        _commitChange(newRaspberry, False)
+        _commitChange(newRaspberry, True)
         return True
     else:
         return False
@@ -80,7 +81,7 @@ def addEvent(raspberryID, eventType, eventTime, note, name):
         return True
 
     newEvent = Events(raspberryid=raspberryID, eventtype=eventType, eventtime=eventTime, note=note, name=name)
-    return _commitChange(newEvent, False)
+    return _commitChange(newEvent, True)
 
 # Deals with pi POST requests. Returns a boolean (True = successfully added)
 def piPosts(data, eventType):
@@ -190,7 +191,7 @@ def getJSON(inputJSON):
 
     if eventType in phoneGetEvents:
         userID = str(data[u'userid'])
-        option = str(data[u'option'])
+        option = int(data[u'option'])
         events = getEvents(eventType, userID, option)
         jsonEventList = phoneGets(events)
         return json.dumps({'eventList': jsonEventList})
