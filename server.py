@@ -65,7 +65,7 @@ class Raspberries(db.Model):
     raspberryname = db.Column(db.String(30))
 
     def __repr__(self):
-        return '<Raspberry %r, id %r>' % (self.name, self.raspberryid)
+        return '<Raspberry %r, id %r>' % (self.raspberryname, self.raspberryid)
 
 # Events Table
 class Events(db.Model):
