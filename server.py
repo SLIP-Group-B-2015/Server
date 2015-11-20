@@ -62,7 +62,7 @@ class Users(db.Model):
 class Raspberries(db.Model):
     raspberryid = db.Column(UUID, primary_key=True)
     userid = db.Column(UUID, db.ForeignKey('users.userid'))
-    name = db.Column(db.String(30))
+    raspberryname = db.Column(db.String(30))
 
     def __repr__(self):
         return '<Raspberry %r, id %r>' % (self.name, self.raspberryid)
