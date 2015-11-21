@@ -183,7 +183,8 @@ def getPies(userID):
     raspberryList = []
     connectedRaspberries = Raspberries.query.filter(Raspberries.userid==userID).all()
     for i in connectedRaspberries:
-        raspberryName = Raspberry_names.query.filter(Raspberry_names.raspberryid==i.raspberryid)
+        raspberryName = Raspberry_names.query.filter(Raspberry_names.raspberryid==i.raspberryid).first()
+        raspberryName = raspberryName.raspberryname
         raspberry = {"raspberryID":i.raspberryid, "raspberryName":raspberryName}
         raspberryList.append(raspberry)
     return raspberryList
