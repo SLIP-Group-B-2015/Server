@@ -60,14 +60,14 @@ class Users(db.Model):
 
 # Raspberries Table
 class Raspberries(db.Model):
-    raspberryid = db.Column(UUID, primary_key=True)
-    userid = db.Column(UUID, db.ForeignKey('users.userid'))
+    raspberryid = db.Column(UUID, db.ForeignKey('raspberry_names.raspberryid'), primary_key=True)
+    userid = db.Column(UUID, db.ForeignKey('users.userid'), primary_key=True)
     def __repr__(self):
         return '<Raspberry %r, UserId %r>' % (self.raspberryid, self.userid)
 
 # Events Table
 class Events(db.Model):
-    raspberryid = db.Column(UUID, primary_key=True)
+    raspberryid = db.Column(UUID, db.ForeignKey('raspberry_names.raspberryid'), primary_key=True)
     eventtype = db.Column(db.String(10), nullable=False, primary_key=True)
     eventtime = db.Column(db.DateTime, default=datetime.now(), primary_key=True)
     note = db.Column(db.Text)
@@ -78,7 +78,7 @@ class Events(db.Model):
         return '<Raspberry %r, EventType %r, EventTime %r, Sent %r>' % (self.raspberryid, self.eventtype, self.eventtime, self.sent)
 
 # RaspberryNames table
-class RaspberryNames(db.Model):
+class Raspberry_names(db.Model):
     raspberryid = db.Column(UUID, primary_key=True)
     raspberryname = db.Column(db.String(30))
 

@@ -18,7 +18,7 @@ Utility functions for the server
 import json
 import uuid
 from passlib.hash import pbkdf2_sha256
-from server import db, Users, Raspberries, Events
+from server import db, Users, Raspberries, Events, Raspberry_names
 
 def _commitChange(newRow, noError):
     try:
@@ -51,23 +51,25 @@ def addUser(username, email, firstName, lastName, password):
 
 # Return Boolean
 def addRaspberry(raspberryID):
-    existingRaspberries = Raspberries.query.filter_by(raspberryid=raspberryID).all()
+    print(raspberryID)
+    existingRaspberries = Raspberry_names.query.filter_by(raspberryid=raspberryID).all()
     if (len(existingRaspberries) == 0):
-        newRaspberry = Raspberries(raspberryid=raspberryID, userid=None)
-        _commitChange(newRaspberry, True)
+        newRaspberryName = Raspberry_names(raspberryid=raspberryID, raspberryname=None)
+        _commitChange(newRaspberryName, True)
         return True
     else:
         return False
 
 # Return boolean
 def connectUserToRaspberry(userID, raspberryID, raspberryName):
-    raspberryRow = db.session.query(Raspberries).filter(Raspberries.userid == userID).\
-                   filter(Raspberries.raspberryid==raspberryID).all()
-    raspberryNameRow = db.session.query(Raspberries).filter(Raspberries.raspberryid=raspberryID).all()
+    print(raspberryID)
+    raspberryNameRow = db.session.query(Raspberry_names).filter(Raspberry_names.raspberryid==raspberryID).first()
+    print(raspberryNameRow)
 
-    if raspberryRow.userid == None:
+    if raspberryNameRow != None and raspberryNameRow.raspberryname == None:
         try:
-            raspberryRow.userid = userID
+            newRaspberryConnection = Raspberries(raspberryid=raspberryID, userid=userID)
+            db.session.add(newRaspberryConnection)
             raspberryNameRow.raspberryname = raspberryName
             db.session.commit()
             return True
@@ -122,7 +124,7 @@ def phonePosts(data, eventType):
         raspberryID = str(data[u'raspberryid'])
         userID = str(data[u'userid'])
         raspberryName = str(data[u'raspberryname'])
-        added = str(connectUserToRaspberry(raspberryID, userID, raspberryName))
+        added = str(connectUserToRaspberry(userID, raspberryID, raspberryName))
         return json.dumps({'added': added})
 
 def postJSON(inputJSON):
