@@ -60,11 +60,15 @@ def addRaspberry(raspberryID):
         return False
 
 # Return boolean
-def connectUserToRaspberry(userID, raspberryID):
-    raspberryRow = Raspberries.query.filter_by(raspberryid=raspberryID).first()
+def connectUserToRaspberry(userID, raspberryID, raspberryName):
+    raspberryRow = db.session.query(Raspberries).filter(Raspberries.userid == userID).\
+                   filter(Raspberries.raspberryid==raspberryID).all()
+    raspberryNameRow = db.session.query(Raspberries).filter(Raspberries.raspberryid=raspberryID).all()
+
     if raspberryRow.userid == None:
         try:
             raspberryRow.userid = userID
+            raspberryNameRow.raspberryname = raspberryName
             db.session.commit()
             return True
         except:
@@ -117,7 +121,8 @@ def phonePosts(data, eventType):
     elif eventType == 'ADDPI':
         raspberryID = str(data[u'raspberryid'])
         userID = str(data[u'userid'])
-        added = str(connectUserToRaspberry(raspberryID, userID))
+        raspberryName = str(data[u'raspberryname'])
+        added = str(connectUserToRaspberry(raspberryID, userID, raspberryName))
         return json.dumps({'added': added})
 
 def postJSON(inputJSON):
@@ -173,11 +178,13 @@ def phoneGets(events):
     return jsonEventList
 
 def getPies(userID):
-    raspberryIDList = []
+    raspberryList = []
     connectedRaspberries = Raspberries.query.filter(Raspberries.userid==userID).all()
     for i in connectedRaspberries:
-        raspberry = {"raspberryID":i.raspberryid}
-    return connectedRaspberries
+        raspberryName = RaspberryNames.query.filter(RaspberryNames.raspberryid==i.raspberryid)
+        raspberry = {"raspberryID":i.raspberryid, "raspberryName":raspberryName}
+        raspberry.append(raspberryList)
+    return raspberryList
 
 def checkLogin(userID, password):
     hashedPassword =  Users.query.filter_by(userid=userID).with_entities(Users.password).first()
