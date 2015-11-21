@@ -185,7 +185,7 @@ def getPies(userID):
     for i in connectedRaspberries:
         raspberryName = Raspberry_names.query.filter(Raspberry_names.raspberryid==i.raspberryid)
         raspberry = {"raspberryID":i.raspberryid, "raspberryName":raspberryName}
-        raspberryList.append(raspberryList)
+        raspberryList.append(raspberry)
     return raspberryList
 
 def checkLogin(userID, password):
