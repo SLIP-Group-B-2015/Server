@@ -62,15 +62,18 @@ def addRaspberry(raspberryID):
 
 # Return boolean
 def connectUserToRaspberry(userID, raspberryID, raspberryName):
-    print(raspberryID)
+    #print(raspberryID)
     raspberryNameRow = db.session.query(Raspberry_names).filter(Raspberry_names.raspberryid==raspberryID).first()
-    print(raspberryNameRow)
+    #print(raspberryNameRow)
 
-    if raspberryNameRow != None and raspberryNameRow.raspberryname == None:
-        try:
-            newRaspberryConnection = Raspberries(raspberryid=raspberryID, userid=userID)
-            db.session.add(newRaspberryConnection)
+    if raspberryNameRow != None:
+        newRaspberryConnection = Raspberries(raspberryid=raspberryID, userid=userID)
+        db.session.add(newRaspberryConnection)
+
+        if raspberryNameRow.raspberryname == None:
             raspberryNameRow.raspberryname = raspberryName
+
+        try:
             db.session.commit()
             return True
         except:
