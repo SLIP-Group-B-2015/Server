@@ -2,6 +2,7 @@ from flask import Flask, request, render_template
 from flask.ext.sqlalchemy import SQLAlchemy
 from sqlalchemy.dialects.postgresql import UUID
 from datetime import datetime
+import pytz
 import uuid
 
 from utilities import *
@@ -14,6 +15,8 @@ app.config.from_object(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres:///slipDB'
 app.config['SQLALCHEMY_NATIVE_UNICODE'] = True
 db = SQLAlchemy(app)
+
+tz = pytz.timezone('Europe/London')
 
 @app.route('/', methods=['POST', 'GET'])
 def home(name=None):
@@ -73,7 +76,7 @@ class Raspberries(db.Model):
 class Events(db.Model):
     raspberryid = db.Column(UUID, db.ForeignKey('raspberry_names.raspberryid'), primary_key=True)
     eventtype = db.Column(db.String(10), nullable=False, primary_key=True)
-    eventtime = db.Column(db.DateTime, default=datetime.now(), primary_key=True)
+    eventtime = db.Column(db.DateTime, default=datetime.now(tz), primary_key=True)
     note = db.Column(db.Text)
     name = db.Column(db.String(50))
     sent = db.Column(db.Boolean, default=False)
