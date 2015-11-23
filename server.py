@@ -56,6 +56,8 @@ def welcome():
 
 def verifyCredentials(username, password):
     hashedPassword = Users.query.filter_by(username=username).with_entities(Users.password).first()
+    if len(hashedPassword) == 0:
+        return False
     return pbkdf2_sha256.verify(password, hashedPassword.password)
 
 # Database Schema
