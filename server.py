@@ -32,7 +32,7 @@ def home(name=None):
             return x
             #print("JSON unpacked!\n")
             #return "This is a test! It works!"
-        return redirect(url_for('home'))
+        return redirect(url_for('login'))
     else:
         # App requests updates from server
         print("\n" + json.dumps(jsonMsg))
@@ -40,7 +40,7 @@ def home(name=None):
             x = getJSON(json.dumps(jsonMsg))
             print(x)
             return x # Get requests should return JSON object with relevant info
-        return redirect(url_for('home'))
+        return redirect(url_for('login'))
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
