@@ -1,6 +1,8 @@
+html {
+    background-color: 000;
+}
 body {
     background: url('http://193.62.81.88:5000/static/images/background.jpg') no-repeat fixed center center;
-    background-size: cover;
     font-family: Montserrat;
 }
 
@@ -14,15 +16,14 @@ body {
 .login-block {
     width: 320px;
     padding: 20px;
-    background: #fff;
+    background: #000;
     border-radius: 5px;
-    border-top: 5px solid #ff656c;
     margin: 0 auto;
 }
 
 .login-block h1 {
     text-align: center;
-    color: #000;
+    color: #fff;
     font-size: 18px;
     text-transform: uppercase;
     margin-top: 0;
