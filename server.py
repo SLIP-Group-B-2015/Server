@@ -46,10 +46,13 @@ def home(name=None):
 def login():
     error = None
     if request.method == 'POST':
+        user = request.form['UserName']
+        password = request.form['Password']
         # Check if username exists in database
         doesNothingYet = None
         #session['logged_in'] = True
         flash('You were logged in')
+        print("User: " + user + " pass: " + password)
         return redirect(url_for('home'))
     return render_template('SLIP_ServerLogin.html', error=error)
         
