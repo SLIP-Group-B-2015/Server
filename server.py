@@ -27,42 +27,24 @@ def home(name=None):
         print("\n" + json.dumps(jsonMsg))
         if (jsonMsg is not None):
             print("Unpacking JSON")
-            x = postJSON(json.dumps(jsonMsg))
-            print(x)
-            return x
-            #print("JSON unpacked!\n")
-            #return "This is a test! It works!"
+            return postJSON(json.dumps(jsonMsg))
         return redirect(url_for('login'))
     else:
         # App requests updates from server
         print("\n" + json.dumps(jsonMsg))
         if jsonMsg is not None:
-            x = getJSON(json.dumps(jsonMsg))
-            print(x)
-            return x # Get requests should return JSON object with relevant info
+            return getJSON(json.dumps(jsonMsg)) # Get requests should return JSON object with relevant info
         return redirect(url_for('login'))
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     error = None
     if request.method == 'POST':
-        userName = request.form['UserName']
-        password = request.form['Password']
-        # Check if username exists in database
-        #session['logged_in'] = True
-        #flash('You were logged in')
-        print("User: " + userName + " pass: " + password)
+        username = request.form['username']
+        password = request.form['password']
+        print("User: " + username + " pass: " + password)
         return redirect(url_for('home'))
     return render_template('SLIP_ServerLogin.html', error=error)
-        
-
-# @app.route('/getRequest/')
-# def getRequest(jsonMsg):
-#     if jsonMsg is not None:
-#         print("\n" + json.dumps(jsonMsg))
-#         return getJSON(json.dumps(jsonMsg)) # Get requests should return JSON object with relevant info
-#     return "No JSON was detected."
-
 
 # Database Schema
 # Written by Arthur Verkaik
@@ -108,10 +90,3 @@ class Raspberry_names(db.Model):
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port = 5000)
-
-# Example query, which gets the events which are linked to the user 'marshall'
-
-# query = db.session.query(Events).\
-# filter(Users.userid == Raspberries.userid).\
-# filter(Users.username == "marshall").\
-# filter(Raspberries.raspberryid == Events.raspberryid).all()
