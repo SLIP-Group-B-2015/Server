@@ -42,6 +42,18 @@ def home(name=None):
             return x # Get requests should return JSON object with relevant info
         return "No JSON was detected."
 
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    error = None
+    if request.method == 'POST':
+        # Check if username exists in database
+    else:
+        session['logged_in'] = True
+        flash('You were logged in')
+        return redirect(url_for('show_entries'))
+    return render_template('SLIP_ServerLogin.html', error=error)
+        
+
 # @app.route('/getRequest/')
 # def getRequest(jsonMsg):
 #     if jsonMsg is not None:
