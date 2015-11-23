@@ -32,7 +32,7 @@ def home(name=None):
             return x
             #print("JSON unpacked!\n")
             #return "This is a test! It works!"
-        return "No JSON was detected."
+        return redirect(url_for('/'))
     else:
         # App requests updates from server
         print("\n" + json.dumps(jsonMsg))
@@ -40,7 +40,7 @@ def home(name=None):
             x = getJSON(json.dumps(jsonMsg))
             print(x)
             return x # Get requests should return JSON object with relevant info
-        return "No JSON was detected."
+        return redirect(url_for('/'))
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -50,7 +50,7 @@ def login():
     else:
         session['logged_in'] = True
         flash('You were logged in')
-        return redirect(url_for('show_entries'))
+        return redirect(url_for('/'))
     return render_template('SLIP_ServerLogin.html', error=error)
         
 
