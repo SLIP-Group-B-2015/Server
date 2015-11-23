@@ -1,5 +1,5 @@
 body {
-    background: url('{{ url_for('static',filename='images/background.jpg') }}') no-repeat fixed center center;
+    background: url('http://193.62.81.88:5000/static/images/background.jpg') no-repeat fixed center center;
     background-size: cover;
     font-family: Montserrat;
 }
