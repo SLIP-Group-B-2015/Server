@@ -46,6 +46,10 @@ def login():
         return redirect(url_for('home'))
     return render_template('SLIP_ServerLogin.html', error=error)
 
+@app.route('/welcome')
+def welcome():
+    return render_template('welcome.html')  # render a template
+
 # Database Schema
 # Written by Arthur Verkaik
 
