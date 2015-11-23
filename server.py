@@ -2,6 +2,7 @@ from flask import Flask, request, render_template, redirect, url_for, flash
 from flask.ext.sqlalchemy import SQLAlchemy
 from sqlalchemy.dialects.postgresql import UUID
 from datetime import datetime
+from passlib.hash import pbkdf2_sha256
 import pytz
 import uuid
 
@@ -43,14 +44,19 @@ def login():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        print("User: " + username + " pass: " + password)
-        return redirect(url_for('welcome'))
-    else:
-        return render_template('SLIP_ServerLogin.html', error=error)
+        if verifyCredentials(username, password):
+            return redirect(url_for('welcome'))
+        else:
+            error = True
+    return render_template('SLIP_ServerLogin.html', error=error)
 
 @app.route('/welcome')
 def welcome():
     return render_template('welcome.html')  # render a template
+
+def verifyCredentials(username, password):
+    hashedPassword = Users.query.filter_by(username=username).with_entities(Users.password).first()
+    return pbkdf2_sha256.verify(password, hashedPassword.password)
 
 # Database Schema
 # Written by Arthur Verkaik
