@@ -2,7 +2,7 @@ html {
     background-color: 000;
 }
 body {
-    background: url('http://193.62.81.88:5000/static/images/background.jpg') no-repeat fixed center center;
+    background: url('http://193.62.81.88:5000/static/images/background.png') no-repeat fixed center center;
     font-family: Montserrat;
     margin: 0;
 }
