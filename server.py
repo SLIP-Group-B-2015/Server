@@ -43,7 +43,7 @@ def login():
         username = request.form['username']
         password = request.form['password']
         print("User: " + username + " pass: " + password)
-        return redirect(url_for('home'))
+        return redirect(url_for('welcome'))
     return render_template('SLIP_ServerLogin.html', error=error)
 
 @app.route('/welcome')
