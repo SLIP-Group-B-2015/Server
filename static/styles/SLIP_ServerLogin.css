@@ -4,6 +4,7 @@ html {
 body {
     background: url('http://193.62.81.88:5000/static/images/background.jpg') no-repeat fixed center center;
     font-family: Montserrat;
+    margin: 0;
 }
 
 .logo {
@@ -19,6 +20,9 @@ body {
     background: #000;
     border-radius: 5px;
     margin: 0 auto;
+    position: relative;
+    top: 50%;
+    transform: translateY(-75%);
 }
 
 .login-block h1 {
