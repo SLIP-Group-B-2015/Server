@@ -45,14 +45,15 @@ def login():
         username = request.form['username']
         password = request.form['password']
         if verifyCredentials(username, password):
-            return redirect(url_for('welcome'))
+            return redirect(url_for('timeline'))
         else:
             error = True
-    return render_template('SLIP_ServerLogin.html', error=error)
+    return render_template('login.html', error=error)
 
-@app.route('/welcome')
-def welcome():
-    return render_template('welcome.html')  # render a template
+@app.route('/timeline')
+@login_required(login_url=url_for('login'))
+def timeline():
+    return render_template('timeline.html')  # render the user's timeline
 
 def verifyCredentials(username, password):
     hashedPassword = Users.query.filter_by(username=username).with_entities(Users.password).first()
