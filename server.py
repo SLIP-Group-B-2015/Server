@@ -47,6 +47,7 @@ def login():
     error = None
     if request.method == 'POST':
         # Check if username exists in database
+        doesNothingYet = None
     else:
         session['logged_in'] = True
         flash('You were logged in')
