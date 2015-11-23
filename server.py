@@ -48,8 +48,7 @@ def login():
     if request.method == 'POST':
         # Check if username exists in database
         doesNothingYet = None
-    else:
-        session['logged_in'] = True
+        #session['logged_in'] = True
         flash('You were logged in')
         return redirect(url_for('home'))
     return render_template('SLIP_ServerLogin.html', error=error)
