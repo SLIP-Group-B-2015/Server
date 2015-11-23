@@ -51,7 +51,6 @@ def login():
     return render_template('login.html', error=error)
 
 @app.route('/timeline')
-@login_required(login_url=url_for('login'))
 def timeline():
     return render_template('timeline.html')  # render the user's timeline
 
