@@ -82,16 +82,11 @@ def verifyCredentials(username, password):
 def getUserEvents(userid):
     eventList = []
 
-    events = Events.query.filter(userid==Users.userid).all()
+    events = Events.query.filter(userid==Connections.userid,Connections.raspberryid==Events.raspberryid).all()
 
     for event in events:
-        name = Connections.query.filter(Connections.raspberryid==event.raspberryid, Connections.userid==event.userid)\
-            .with_entities(Connections.raspberryname).first()
-        name = name.first()
-        if name is None:
-            name = "Unknown"
-
-        dictEvent = {"raspberryID": name, "eventType":event.eventtype, "eventTime":event.eventtime.strftime("%H:%M on %A %d %B %Y"),
+        
+        dictEvent = {"raspberryID": event.raspberryname, "eventType":event.eventtype, "eventTime":event.eventtime.strftime("%H:%M on %A %d %B %Y"),
                      "note": event.note, "name": event.name}
         eventList.append(dictEvent)
 
