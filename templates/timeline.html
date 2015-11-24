@@ -25,6 +25,9 @@
             {% elif event.eventType == "MAIL" %}
             <img src="{{ url_for('static', filename='images/icons/mail.png') }}" alt="Mail">
 
+            {% elif event.eventType == "KNOCK" %}
+            <img src="{{ url_for('static', filename='images/icons/knock.png') }}" alt="Mail">
+
             {% endif %}
 
         </div> <!-- timeline-img -->
