@@ -127,9 +127,11 @@ class Users(db.Model):
         return '<User %s>' % self.username
 
 # Raspberries Table
-class Raspberries(db.Model):
+class Connections(db.Model):
     raspberryid = db.Column(UUID, db.ForeignKey('raspberry_names.raspberryid'), primary_key=True)
     userid = db.Column(UUID, db.ForeignKey('users.userid'), primary_key=True)
+    raspberryname = db.Column(db.String(30))
+    
     def __repr__(self):
         return '<Raspberry %r, UserId %r>' % (self.raspberryid, self.userid)
 
@@ -146,9 +148,8 @@ class Events(db.Model):
         return '<Raspberry %r, EventType %r, EventTime %r, Sent %r>' % (self.raspberryid, self.eventtype, self.eventtime, self.sent)
 
 # RaspberryNames table
-class Raspberry_names(db.Model):
+class Raspberries(db.Model):
     raspberryid = db.Column(UUID, primary_key=True)
-    raspberryname = db.Column(db.String(30))
 
     def __repr__(self):
         return '<Raspberry %r, Name %r>' % (self.raspberryid, self.raspberryname)
