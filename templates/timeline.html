@@ -36,7 +36,7 @@
             </div> <!-- time -->
 
             <div class="raspberry-name">
-                <p>{{ event.raspberryID }}</p>
+                <p>{{ event.raspberryName }}</p>
             </div> <!-- raspberry-name -->
 
             {% if event.eventType == "ID_SCAN" %}
@@ -55,7 +55,9 @@
 
 	</div> <!-- timeline-block -->
     {% else %}
-      <p>No events to display</p>
+      <div class ="empty">
+        <p>No events to display</p>
+      </div> <!-- empty -->
     {% endfor %}
   </section>
 </div>
