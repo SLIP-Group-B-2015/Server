@@ -91,6 +91,7 @@ def getUserEvents(userid):
                      "note": event.note, "name": event.name}
         eventList.append(dictEvent)
 
+    eventList.reverse()
     return eventList
 
 # Database Schema
