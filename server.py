@@ -83,15 +83,14 @@ def getUserEvents(userid):
     eventList = []
 
     events = db.session.query(Events).filter(Users.userid==userid).\
-             filter(Users.userid==Raspberries.userid).\
-             filter(Raspberries.raspberryid==Events.raspberryid).all()
+             filter(Users.userid==Connections.userid).all()
 
     for event in events:
         name = Connections.query.filter(Connections.raspberryid==event.raspberryid).with_entities(Connections.raspberryname).first()
         name = name.first()
         if name is None:
             name = "Unknown"
-             
+
         dictEvent = {"raspberryID": name, "eventType":event.eventtype, "eventTime":event.eventtime.strftime("%H:%M on %A %d %B %Y"),
                      "note": event.note, "name": event.name}
         eventList.append(dictEvent)
