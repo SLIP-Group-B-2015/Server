@@ -3,14 +3,12 @@ Arthur Verkaik
 s1247563
 Utility functions for the server
 # TODO
+  - REFACTOR REFACTOR REFACTOR.
   - Documentation for each function
-  - properly throw/catch errors
-  - create testing functions (generateUsers, for example).
-  - abstract away large queries.
-  - add "INVALID EVENT TYPE" errors everywhere.
-  - postJSON should only return False if the data is not in the database when
-    returning False.
-  - debug getEvents
+  - testing functions
+  - return appropriate HTTP codes instead of 200 for everything.
+  - throw/catch errors
+  - standardize queries
 '''
 
 import json, uuid

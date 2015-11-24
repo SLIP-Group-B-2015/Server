@@ -114,10 +114,13 @@ class Users(db.Model):
     lastname = db.Column(db.String(30), nullable=False)
     password = db.Column(db.String(100), nullable=False)
 
-    def __init__(self, username, password, email):
+    def __init__(self, userid, username, email, firstname, lastname, password):
+        self.userid = userid
         self.username = username
-        self.password = password
         self.email = email
+        self.firstname = firstname
+        self.lastname = lastname
+        self.password = password
 
     def is_authenticated(self):
         return True
