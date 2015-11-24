@@ -32,15 +32,15 @@
 		<div class="timeline-content">
 
             <div class="time">
-                <p>{{ event.time }}</p>
+                <p>{{ event.eventTime }}</p>
             </div> <!-- time -->
 
             <div class="raspberry-name">
-                <p>{{ event.raspberryName }}</p>
+                <p>{{ event.raspberryID }}</p>
             </div> <!-- raspberry-name -->
 
             {% if event.eventType == "ID_SCAN" %}
-                {% if "note" in event %}
+                {% if "note" is not None %}
                     <div class="user">
                         <p>{{ event.name }} left note "{{ event.note }}"</p>
                     </div> <!-- name -->
