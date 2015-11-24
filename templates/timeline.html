@@ -60,12 +60,13 @@
     {% else %}
       <div class="timeline-block">
         <div class="timeline-img">
-            <div class="idscan">
+            <div class="empty">
             <img src="{{ url_for('static', filename='images/icons/empty.png') }}" alt="Empty">
             </div>
         </div> <!-- timeline-img -->
         <div class="timeline-content">
             <p>There doesn't seem to be anything here yet...</p>
+            <p></p>
         </div> <!-- timeline-content -->
       </div> <!-- timeline-block -->
     {% endfor %}
