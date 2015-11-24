@@ -82,11 +82,11 @@ def verifyCredentials(username, password):
 def getUserEvents(userid):
     eventList = []
 
-    events = db.session.query(Events).filter(Users.userid==userid).\
-             filter(Users.userid==Connections.userid).all()
+    events = Events.query.filter(userid==Users.userid).all()
 
     for event in events:
-        name = Connections.query.filter(Connections.raspberryid==event.raspberryid).with_entities(Connections.raspberryname).first()
+        name = Connections.query.filter(Connections.raspberryid==event.raspberryid, Connections.userid==event.userid)\
+            .with_entities(Connections.raspberryname).first()
         name = name.first()
         if name is None:
             name = "Unknown"
