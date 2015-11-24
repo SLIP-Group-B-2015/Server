@@ -79,12 +79,19 @@ def verifyCredentials(username, password):
         return None
 
 def getUserEvents(userid):
+    eventList = []
+
     events = db.session.query(Events).filter(Users.userid==userid).\
              filter(Users.userid==Raspberries.userid).\
              filter(Raspberries.raspberryid==Events.raspberryid).all()
-    print events
 
-    return events
+    for event in events:
+        dictEvent = {"raspberryID": event.raspberryid, "eventType":event.eventtype, "eventTime":str(event.eventtime),
+                     "note": event.note, "name": event.name}
+        eventList.append(dictEvent)
+
+    print eventList
+    return eventList
 
 # Database Schema
 # Written by Arthur Verkaik
