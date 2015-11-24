@@ -40,7 +40,7 @@
             </div> <!-- raspberry-name -->
 
             {% if event.eventType == "ID_SCAN" %}
-                {% if "note" is not None %}
+                {% if event.note is not None %}
                     <div class="user">
                         <p>{{ event.name }} left note "{{ event.note }}"</p>
                     </div> <!-- name -->
