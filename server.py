@@ -16,6 +16,7 @@ app.config.from_object(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres:///slipDB'
 app.config['SQLALCHEMY_NATIVE_UNICODE'] = True
 db = SQLAlchemy(app)
+app.config['SECRET_KEY'] = 'super secret key'
 
 tz = pytz.timezone('Europe/London')
 
