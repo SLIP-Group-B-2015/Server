@@ -82,6 +82,7 @@ def getUserEvents(userid):
     events = db.session.query(Events).filter(Users.userid==userid).\
              filter(Users.userid==Raspberries.userid).\
              filter(Raspberries.raspberryid==Events.raspberryid).all()
+    print events
 
     return events
 
