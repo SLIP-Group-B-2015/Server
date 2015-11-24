@@ -5,7 +5,7 @@ from datetime import datetime
 from passlib.hash import pbkdf2_sha256
 import pytz
 from flask.ext.login import LoginManager, login_user , logout_user , current_user , login_required
-import time
+from datetime import datetime
 
 from utilities import *
 
@@ -87,7 +87,7 @@ def getUserEvents(userid):
              filter(Raspberries.raspberryid==Events.raspberryid).all()
 
     for event in events:
-        dictEvent = {"raspberryID": event.raspberryid, "eventType":event.eventtype, "eventTime":time.strftime("%H:%M on %A %d %B %Y", event.eventtime),
+        dictEvent = {"raspberryID": event.raspberryid, "eventType":event.eventtype, "eventTime":event.eventtime.strftime("%H:%M on %A %d %B %Y"),
                      "note": event.note, "name": event.name}
         eventList.append(dictEvent)
 
