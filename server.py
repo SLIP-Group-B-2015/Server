@@ -65,12 +65,7 @@ def login():
 @app.route('/timeline')
 @login_required
 def timeline():
-    events = [{"eventType": "MAIL", "time": "12:00am, January 1, 1973", "raspberryName": "Home"},
-              {"eventType": "OPEN", "time": "12:00am, January 1, 1972", "raspberryName": "Office"},
-              {"eventType": "ID_SCAN", "time": "12:00am, January 1, 1971", "raspberryName": "Office",
-               "name": "Marshall Bradley"},
-              {"eventType": "ID_SCAN", "time": "12:00am, January 1, 1970", "raspberryName": "Office",
-               "name": "Arthur Verkaik", "note": "Hey there!"}]
+    events = getUserEvents(current_user.userid)
 
     return render_template('timeline.html', events=events)  # render the user's timeline
 
@@ -82,6 +77,13 @@ def verifyCredentials(username, password):
         return Users.query.filter_by(username=username).first()
     else:
         return None
+
+def getUserEvents(userid):
+    events = db.session.query(Events).filter(Users.userid==userid).\
+             filter(Users.userid==Raspberries.userid).\
+             filter(Raspberries.raspberryid==Events.raspberryid).all()
+
+    return events
 
 # Database Schema
 # Written by Arthur Verkaik
