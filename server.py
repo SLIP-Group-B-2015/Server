@@ -54,10 +54,11 @@ def login():
             error = True
         else:
             login_user(registered_user)
-            return redirect(request.args.get('next') or url_for('index'))
+            return redirect(url_for('timeline'))
     return render_template('login.html', error=error)
 
 @app.route('/timeline')
+@login_required
 def timeline():
     events = [{"eventType": "MAIL", "time": "12:00am, January 1, 1973", "raspberryName": "Home"},
               {"eventType": "OPEN", "time": "12:00am, January 1, 1972", "raspberryName": "Office"},
