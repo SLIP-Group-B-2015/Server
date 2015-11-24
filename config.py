@@ -2,7 +2,7 @@ class Config.py(object):
     DEBUG = False
     TESTING = False
     CSRF_ENABLED = True
-    SECRET_KEY = 'this-really-needs-to-be-changed'
+    SECRET_KEY = 'so-very-secret'
 
 class ProductionConfig(Config):
     DEBUG = False
