@@ -76,6 +76,7 @@ Output: Adds a raspberry to the Raspberries table, if no constraints are broken.
 Returns the newly added pi's UUID if the operation was successful, otherwise,
 returns False.
 '''
+
 def addRaspberry(raspberryID):
     existingPis = Raspberries.query.filter_by(raspberryid=raspberryID).all()
     if (len(existingPis) == 0):
