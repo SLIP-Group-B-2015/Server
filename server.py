@@ -87,7 +87,12 @@ def getUserEvents(userid):
              filter(Raspberries.raspberryid==Events.raspberryid).all()
 
     for event in events:
-        dictEvent = {"raspberryID": event.raspberryid, "eventType":event.eventtype, "eventTime":event.eventtime.strftime("%H:%M on %A %d %B %Y"),
+        name = Connections.query.filter(Connections.raspberryid==event.raspberryid).with_entities(Connections.raspberryname).first()
+        name = name.first()
+        if name is None:
+            name = "Unknown"
+             
+        dictEvent = {"raspberryID": name, "eventType":event.eventtype, "eventTime":event.eventtime.strftime("%H:%M on %A %d %B %Y"),
                      "note": event.note, "name": event.name}
         eventList.append(dictEvent)
 
