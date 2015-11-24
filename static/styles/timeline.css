@@ -1,0 +1,39 @@
+html {
+    background-color: #3F3F3F;
+    font-family: Montserrat;
+}
+
+h1 {
+    text-transform: uppercase;
+    text-align: center;
+    color: #fff;
+}
+
+.timeline-img {
+    display: inline-block;
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+.idscan img {
+    margin-bottom: 20px;
+}
+
+.timeline-content {
+    display: inline-block;
+}
+
+.timeline-img img {
+    width: 50px !important;
+    height: 50px !important;
+}
+
+.timeline-block {
+    width: 500px;
+    margin: 0 auto;
+    margin-top: 25px;
+    margin-bottom: 25px;
+    background-color: #fff;
+    border-radius: 5px;
+    position: relative;
+}

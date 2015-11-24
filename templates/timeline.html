@@ -1,11 +1,62 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-  <head>
-    <title>Timeline</title>
-  </head>
-  <body>
-    <div class="container">
-      <h1>You have successfully logged in!</h1>
-    </div>
-  </body>
+<title>Timeline</title>
+<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='styles/timeline.css') }}"/>
+<div class=page>
+  <h1>Timeline</h1>
+  <section id="timeline">
+    {% for event in events %}
+      <div class="timeline-block">
+
+        <div class="timeline-img">
+
+			{% if event.eventType == "CLOSE" %}
+            <img src="{{ url_for('static', filename='images/icons/closed.png') }}" alt="Door Closed">
+
+            {% elif event.eventType == "OPEN" %}
+            <img src="{{ url_for('static', filename='images/icons/opened.png') }}" alt="Door Opened">
+
+            {% elif event.eventType == "ID_SCAN" %}
+            <div class="idscan">
+            <img src="{{ url_for('static', filename='images/icons/scan.png') }}" alt="ID Scanned">
+            </div>
+
+            {% elif event.eventType == "MAIL" %}
+            <img src="{{ url_for('static', filename='images/icons/mail.png') }}" alt="Mail">
+
+            {% endif %}
+
+        </div> <!-- timeline-img -->
+
+		<div class="timeline-content">
+
+            <div class="time">
+                <p>{{ event.time }}</p>
+            </div> <!-- time -->
+
+            <div class="raspberry-name">
+                <p>{{ event.raspberryName }}</p>
+            </div> <!-- raspberry-name -->
+
+            {% if event.eventType == "ID_SCAN" %}
+                {% if "note" in event %}
+                    <div class="user">
+                        <p>{{ event.name }} left note "{{ event.note }}"</p>
+                    </div> <!-- name -->
+                {% else %}
+                    <div class="user">
+                        <p>{{ event.name }}</p>
+                    </div> <!-- name -->
+                {% endif %}
+            {% endif %}
+
+		</div> <!-- timeline-content -->
+
+	</div> <!-- timeline-block -->
+    {% else %}
+      <p>No events to display</p>
+    {% endfor %}
+  </section>
+</div>
 </html>

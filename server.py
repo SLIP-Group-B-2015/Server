@@ -4,7 +4,7 @@ from sqlalchemy.dialects.postgresql import UUID
 from datetime import datetime
 from passlib.hash import pbkdf2_sha256
 import pytz
-import uuid
+from flask.ext.login import LoginManager
 
 from utilities import *
 
@@ -18,6 +18,10 @@ app.config['SQLALCHEMY_NATIVE_UNICODE'] = True
 db = SQLAlchemy(app)
 
 tz = pytz.timezone('Europe/London')
+
+login_manager = LoginManager()
+login_manager.login_view = 'login'
+login_manager.init_app(app)
 
 @app.route('/', methods=['POST', 'GET'])
 def home(name=None):
@@ -52,7 +56,14 @@ def login():
 
 @app.route('/timeline')
 def timeline():
-    return render_template('timeline.html')  # render the user's timeline
+    events = [{"eventType": "MAIL", "time": "12:00am, January 1, 1973", "raspberryName": "Home"},
+              {"eventType": "OPEN", "time": "12:00am, January 1, 1972", "raspberryName": "Office"},
+              {"eventType": "ID_SCAN", "time": "12:00am, January 1, 1971", "raspberryName": "Office",
+               "name": "Marshall Bradley"},
+              {"eventType": "ID_SCAN", "time": "12:00am, January 1, 1970", "raspberryName": "Office",
+               "name": "Arthur Verkaik", "note": "Hey there!"}]
+
+    return render_template('timeline.html', events=events)  # render the user's timeline
 
 def verifyCredentials(username, password):
     hashedPassword = Users.query.filter_by(username=username).with_entities(Users.password).first()
@@ -71,6 +82,23 @@ class Users(db.Model):
     firstname = db.Column(db.String(30), nullable=False)
     lastname = db.Column(db.String(30), nullable=False)
     password = db.Column(db.String(100), nullable=False)
+
+    def __init__(self, username, password, email):
+        self.username = username
+        self.password = password
+        self.email = email
+
+    def is_authenticated(self):
+        return True
+
+    def is_active(self):
+        return True
+
+    def is_anonymous(self):
+        return False
+
+    def get_id(self):
+        return unicode(self.id)
 
     def __repr__(self):
         return '<User %s>' % self.username
