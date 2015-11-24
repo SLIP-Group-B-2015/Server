@@ -24,6 +24,11 @@ login_manager = LoginManager()
 login_manager.login_view = 'login'
 login_manager.init_app(app)
 
+
+@login_manager.user_loader
+def load_user(userid):
+    return Users.query.filter_by(userid=userid).first()
+
 @app.route('/', methods=['POST', 'GET'])
 def home(name=None):
     print request
