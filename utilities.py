@@ -259,7 +259,7 @@ def getPies(userID):
     connectedPis = Connections.query.filter(Connections.userid==userID).all()
     for i in connectedPis:
         raspberryRow = Raspberries.query.filter(Raspberries.raspberryid==i.raspberryid).first()
-        raspberry = {"raspberryID":i.raspberryid, "raspberryName":i.raspberryName}
+        raspberry = {"raspberryID":i.raspberryid, "raspberryName":i.raspberryname}
         raspberryList.append(raspberry)
     return raspberryList
 
