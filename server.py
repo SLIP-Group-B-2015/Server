@@ -95,7 +95,7 @@ def getUserEvents(userid):
                      "note": event[1].note, "name": event[1].name}
         eventList.append(dictEvent)
 
-    retlist = sorted(eventList, key=lambda k: k['eventTime'])
+    retlist = sorted(eventList, key=lambda k: k['eventTime'], reverse=True)
 
     for element in retlist:
         element["eventTime"] = element["eventTime"].strftime("%H:%M on %A %d %B %Y")
