@@ -26,7 +26,7 @@
             <img src="{{ url_for('static', filename='images/icons/mail.png') }}" alt="Mail">
 
             {% elif event.eventType == "KNOCK" %}
-            <img src="{{ url_for('static', filename='images/icons/knock.png') }}" alt="Mail">
+            <img src="{{ url_for('static', filename='images/icons/knock.png') }}" alt="Knock">
 
             {% endif %}
 
@@ -58,9 +58,14 @@
 
 	</div> <!-- timeline-block -->
     {% else %}
-      <div class ="empty">
-        <p>No events to display</p>
-      </div> <!-- empty -->
+      <div class="timeline-block">
+        <div class="timeline-img">
+            <img src="{{ url_for('static', filename='images/icons/empty.png') }}" alt="Empty">
+        </div> <!-- timeline-img -->
+        <div class="timeline-content">
+            <p>There doesn't seem to be anything here yet...</p>
+        </div> <!-- timeline-content -->
+      </div> <!-- timeline-block -->
     {% endfor %}
   </section>
 </div>
