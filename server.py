@@ -85,18 +85,22 @@ def getUserEvents(userid):
     events = db.session.query(Connections,Events).filter(userid==Connections.userid,Connections.raspberryid==Events.raspberryid).all()
 
     for event in events:
-        name = ""
+
         if event[0].raspberryname is None:
             name = "Unknown"
         else:
             name = event[0].raspberryname
 
-        dictEvent = {"raspberryName": name, "eventType":event[1].eventtype, "eventTime":event[1].eventtime.strftime("%H:%M on %A %d %B %Y"),
+        dictEvent = {"raspberryName": name, "eventType":event[1].eventtype, "eventTime":event[1].eventtime,
                      "note": event[1].note, "name": event[1].name}
         eventList.append(dictEvent)
 
-    eventList.reverse()
-    return eventList
+    retlist = sorted(eventList, key=lambda k: k['eventTime'])
+
+    for element in retlist:
+        element["eventTime"] = element["eventTime"].strftime("%H:%M on %A %d %B %Y")
+
+    return retlist
 
 # Database Schema
 # Written by Arthur Verkaik
