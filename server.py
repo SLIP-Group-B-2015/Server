@@ -4,7 +4,7 @@ from sqlalchemy.dialects.postgresql import UUID
 from datetime import datetime
 from passlib.hash import pbkdf2_sha256
 import pytz
-from flask.ext.login import LoginManager
+from flask.ext.login import LoginManager, login_user , logout_user , current_user , login_required
 
 from utilities import *
 
@@ -48,10 +48,12 @@ def login():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        if verifyCredentials(username, password):
-            return redirect(url_for('timeline'))
-        else:
+        registered_user = verifyCredentials(username, password)
+        if registered_user is None:
             error = True
+        else:
+            login_user(registered_user)
+            return redirect(request.args.get('next') or url_for('index'))
     return render_template('login.html', error=error)
 
 @app.route('/timeline')
@@ -67,9 +69,12 @@ def timeline():
 
 def verifyCredentials(username, password):
     hashedPassword = Users.query.filter_by(username=username).with_entities(Users.password).first()
-    if hashedPassword == None:
-        return False
-    return pbkdf2_sha256.verify(password, hashedPassword.password)
+    if hashedPassword is None:
+        return None
+    if pbkdf2_sha256.verify(password, hashedPassword.password):
+        return Users.query.filter_by(username=username).first()
+    else:
+        return None
 
 # Database Schema
 # Written by Arthur Verkaik
@@ -98,7 +103,7 @@ class Users(db.Model):
         return False
 
     def get_id(self):
-        return unicode(self.id)
+        return unicode(self.userid)
 
     def __repr__(self):
         return '<User %s>' % self.username
