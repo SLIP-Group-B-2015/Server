@@ -162,6 +162,9 @@ class Events(db.Model):
 class Raspberries(db.Model):
     raspberryid = db.Column(UUID, primary_key=True)
 
+    def __init__(self, raspberryid):
+        self.raspberryid = raspberryid
+
     def __repr__(self):
         return '<Raspberry %r, Name %r>' % (self.raspberryid, self.raspberryname)
 
