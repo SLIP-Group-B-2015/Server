@@ -166,7 +166,7 @@ class Raspberries(db.Model):
         self.raspberryid = raspberryid
 
     def __repr__(self):
-        return '<Raspberry %r, Name %r>' % (self.raspberryid, self.raspberryname)
+        return '<Raspberry %r>' % (self.raspberryid)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port = 5000)
