@@ -3,7 +3,11 @@ html {
 }
 
 a {
-    color: hotpink
+    color: white;
+}
+
+a:hover {
+    color: hotpink;
 }
 
 body {
