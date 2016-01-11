@@ -3,15 +3,19 @@
     <link href="{{ url_for('static',filename='styles/login.css') }}" rel="stylesheet" type="text/css">
     <div class="login-block">
     {% if error %}
-        <h1 id="invalid">Invalid credentials</h1>
+        <h1 id="invalid">Invalid credentials, already in use</h1>
     {% else %}
-        <h1>Login</h1>
+        <h1>Register</h1>
     {% endif %}
         <form action="" method="post">
+            <input type="text" value="" placeholder="Firstname" id="firstname" name="firstname" value="{{request.form.firstname }}"/>
+            <input type="text" value="" placeholder="Lastname" id="lastname" name="lastname" value="{{request.form.lastname }}"/>
             <input type="text" value="" placeholder="Username" id="username" name="username" value="{{request.form.username }}"/>
+            <input type="text" value="" placeholder="Email" id="email" name="email" value="{{request.form.email }}"/>
             <input type="password" value="" placeholder="Password" id="password" name="password" value="{{request.form.password }}"/>
             <button type="submit">Submit</button>
+	    <button type="reset">Reset</button>
         </form>
-	<a href="{{ url_for('registerUser') }}">Not registered? Sign up here!</a>
+	<a href="{{ url_for('login') }}">Login</a>
     </div>
 </html>

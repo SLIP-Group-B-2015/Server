@@ -63,6 +63,26 @@ def login():
             return redirect(url_for('timeline'))
     return render_template('login.html', error=error)
 
+@app.route('/registerUser', methods=['GET', 'POST'])
+def register():
+    error = None
+    print request
+    if request.method == 'POST':
+        firstname = request.form['firstname']
+        lastname = request.form['lastname']
+        username = request.form['username']
+        email = request.form['email']
+        password = request.form['password']
+        registered_user = verifyCredentials(username, password)
+        if registered_user is None:
+            # Available credentials, insert into DB and login
+            addUser(username, email, firstname, lastname, password)
+            login_user(registered_user)
+            return redirect(url_for('timeline'))
+        else:
+            error = True
+    return render_template('registerUser.html', error=error)
+
 @app.route('/timeline')
 @login_required
 def timeline():
