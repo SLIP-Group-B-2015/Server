@@ -77,6 +77,7 @@ def register():
         if registered_user is None:
             # Available credentials, insert into DB and login
             addUser(username, email, firstname, lastname, password)
+            registered_user = verifyCredentials(username, password)
             login_user(registered_user)
             return redirect(url_for('timeline'))
         else:
