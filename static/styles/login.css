@@ -1,6 +1,11 @@
 html {
     background-color: #3F3F3F;
 }
+
+a {
+    color: hotpink
+}
+
 body {
     background: url('http://193.62.81.88:5000/static/images/background.png') no-repeat fixed center center;
     font-family: Montserrat;
