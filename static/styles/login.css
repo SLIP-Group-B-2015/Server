@@ -41,6 +41,11 @@ body {
     text-transform: uppercase;
     margin-top: 0;
     margin-bottom: 20px;
+}>
+
+.login-block p {
+    text-align: center;
+    color: #fff;
 }
 
 #invalid {
