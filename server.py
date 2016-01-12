@@ -73,16 +73,15 @@ def register():
         username = request.form['username']
         email = request.form['email']
         password = request.form['password']
-        registered_user = verifyCredentials(username, password)
-        if registered_user is None:
+        registered_user = checkUser(username, email)
+        if registered_user:
+            error = True
+        else:
             # Available credentials, insert into DB and login
             addUser(username, email, firstname, lastname, password)
-            registered_user = verifyCredentials(username, password)
-            if registered_user is not None:
-                login_user(registered_user)
-                return redirect(url_for('timeline'))
-        else:
-            error = True
+            user = verifyCredentials(username, password)
+            login_user(user)
+            return redirect(url_for('timeline'))
     return render_template('registerUser.html', error=error)
 
 @app.route('/timeline')
