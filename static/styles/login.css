@@ -16,10 +16,6 @@ body {
     margin: 0;
 }
 
-body > p {
-  color: #fff;
-}
-
 .logo {
     width: 213px;
     height: 36px;
@@ -53,6 +49,10 @@ body > p {
     -ms-animation: fadein 3s; /* Internet Explorer */
     -o-animation: fadein 3s; /* Opera < 12.1 */
     animation: fadein 3s;
+}
+
+#paragraph {
+  color: #fff;
 }
 
 @keyframes fadein {
