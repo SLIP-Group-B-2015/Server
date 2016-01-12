@@ -78,10 +78,8 @@ def register():
             error = True
         else:
             # Available credentials, insert into DB and login
-            addUser(username, email, firstname, lastname, password)
-            user = verifyCredentials(username, password)
-            print user
-            if user is not None:
+            user = addUser(username, email, firstname, lastname, password)
+            if user != False:
                 login_user(user)
                 return redirect(url_for('timeline'))
     return render_template('registerUser.html', error=error)
