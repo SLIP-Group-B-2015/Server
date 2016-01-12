@@ -73,12 +73,14 @@ def register():
         username = request.form['username']
         email = request.form['email']
         password = request.form['password']
-        user = addUser(username, email, firstname, lastname, password)
-        print user
-        if user != False:
-            # Available credentials, insert into DB and login   
-            login_user(user)
-            return redirect(url_for('timeline'))
+        registered_user = checkUser(username, email)
+        if not registered_user:
+            # Available credentials, insert into DB and login
+            addUser(username, email, firstname, lastname, password)
+            user = verifyCredentials(username, password)
+            if user in not None:
+                login_user(user)
+                return redirect(url_for('timeline'))
         else:
             error = True
     return render_template('registerUser.html', error=error)
