@@ -80,6 +80,7 @@ def register():
             # Available credentials, insert into DB and login
             addUser(username, email, firstname, lastname, password)
             user = verifyCredentials(username, password)
+            print user
             if user is not None:
                 login_user(user)
                 return redirect(url_for('timeline'))
