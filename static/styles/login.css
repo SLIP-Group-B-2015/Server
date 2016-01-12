@@ -14,7 +14,6 @@ body {
     background: url('http://193.62.81.88:5000/static/images/background.png') no-repeat fixed center center;
     font-family: Montserrat;
     margin: 0;
-    color: #fff;
 }
 
 .logo {
@@ -136,4 +135,9 @@ body {
 
 .login-block button:hover {
     background: #ff7b81;
+}
+
+
+#paragraph1 {
+  color: #fff;
 }
