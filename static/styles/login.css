@@ -16,6 +16,10 @@ body {
     margin: 0;
 }
 
+body > p {
+  color: #fff;
+}
+
 .logo {
     width: 213px;
     height: 36px;
@@ -41,7 +45,7 @@ body {
     text-transform: uppercase;
     margin-top: 0;
     margin-bottom: 20px;
-}>
+}
 
 #invalid {
     -webkit-animation: fadein 3s; /* Safari, Chrome and Opera > 12.1 */

@@ -3,7 +3,8 @@
     <link href="{{ url_for('static',filename='styles/login.css') }}" rel="stylesheet" type="text/css">
     <div class="login-block">
     {% if error %}
-        <h1 id="invalid">Registration failed! Ensure your email is not already associated with an account and pick another username</h1>
+        <h1 id="invalid">Registration failed!</h1>
+        <p>Ensure your email is not already associated with an account and pick another username</p>
     {% else %}
         <h1>Register</h1>
     {% endif %}
