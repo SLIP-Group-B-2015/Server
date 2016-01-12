@@ -80,8 +80,9 @@ def register():
             # Available credentials, insert into DB and login
             addUser(username, email, firstname, lastname, password)
             user = verifyCredentials(username, password)
-            login_user(user)
-            return redirect(url_for('timeline'))
+            if user is not None:
+                login_user(user)
+                return redirect(url_for('timeline'))
     return render_template('registerUser.html', error=error)
 
 @app.route('/timeline')
