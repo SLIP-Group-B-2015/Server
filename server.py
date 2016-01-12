@@ -74,10 +74,11 @@ def register():
         email = request.form['email']
         password = request.form['password']
         registered_user = checkUser(username, email)
-        if not registered_user:
+        if registered_user:
             # Available credentials, insert into DB and login
             addUser(username, email, firstname, lastname, password)
             user = verifyCredentials(username, password)
+            print user
             if user is not None:
                 login_user(user)
                 return redirect(url_for('timeline'))
