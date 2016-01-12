@@ -1,6 +1,15 @@
 html {
     background-color: #3F3F3F;
 }
+
+a {
+    color: white;
+}
+
+a:hover {
+    color: hotpink;
+}
+
 body {
     background: url('http://193.62.81.88:5000/static/images/background.png') no-repeat fixed center center;
     font-family: Montserrat;
@@ -40,6 +49,10 @@ body {
     -ms-animation: fadein 3s; /* Internet Explorer */
     -o-animation: fadein 3s; /* Opera < 12.1 */
     animation: fadein 3s;
+}
+
+#paragraph {
+  color: #fff;
 }
 
 @keyframes fadein {
