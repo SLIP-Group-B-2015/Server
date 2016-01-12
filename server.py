@@ -79,6 +79,7 @@ def register():
         else:
             # Available credentials, insert into DB and login
             user = addUser(username, email, firstname, lastname, password)
+            print user
             if user != False:
                 login_user(user)
                 return redirect(url_for('timeline'))
