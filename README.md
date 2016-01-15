@@ -6,9 +6,11 @@ We use python's Flask for the web pages (http://flask.pocoo.org/) and run the se
 To get to the server use a DICE terminal and these commands:
 
 \> ssh jamiemcc@ssh.comp-soc.com
+
 Password: "SlipGroupBee"
 
 \> ssh elara.comp-soc.com 
+
 Password: "SlipGroupBee"
 
 Most code is in  /home/jamiemcc/SLIPServer/Server.
