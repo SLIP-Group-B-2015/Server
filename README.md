@@ -9,6 +9,7 @@ To get to the server use a DICE terminal and these commands:
 
 Password: "SlipGroupBee"
 
+
 \> ssh elara.comp-soc.com 
 
 Password: "SlipGroupBee"
