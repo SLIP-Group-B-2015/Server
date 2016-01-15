@@ -13,6 +13,6 @@ Password: "SlipGroupBee"
 
 Password: "SlipGroupBee"
 
-Server code is in  /home/jamiemcc/SLIPServer/Server in the file server.py.
+Server code is in  /home/jamiemcc/SLIPServer/Server.
 
 Flask should be installed on the UoE linux machines (else install it on your own machine), all you need to is activate the server environment by changing to the repository directory containing venv and type "source venv/bin/activate" then you can use "python server.py" to execute code.
