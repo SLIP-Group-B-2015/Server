@@ -15,4 +15,4 @@ Password: "SlipGroupBee"
 
 Server code is in  /home/jamiemcc/SLIPServer/Server.
 
-Flask should be installed on the UoE linux machines (else install it on your own machine), all you need to is activate the server environment by switching to home/jamiemcc/SLIPServer (make sure it containins venv) and type "source venv/bin/activate" then you can use "python server.py" to execute code.
+Flask should be installed on the UoE linux machines (else install it on your own machine), all you need to do is activate the server environment by switching to home/jamiemcc/SLIPServer (make sure it containins venv) and type "source venv/bin/activate" then you can use "python server.py" to execute code.
